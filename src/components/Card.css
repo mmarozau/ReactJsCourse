@@ -1,0 +1,18 @@
+.card-body {
+    color: #333333;
+
+    height: fit-content;
+    min-height: 250px;
+    width: 500px;
+    background-color: rgb(198, 198, 198);
+    
+    white-space: pre-wrap;
+    padding: 4px;
+
+    border: 1px #888888 solid;
+    border-radius: 4px;
+}
+
+.card-title {
+    font-weight: bold;
+}

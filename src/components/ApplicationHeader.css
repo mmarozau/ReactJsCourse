@@ -1,0 +1,52 @@
+.header {
+    height: 50px;
+    min-height: 50px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: #333333;
+    display: flex;
+}
+
+.header-title-label-wr {
+    padding: 0 8px 0 8px;
+    display: flex;
+    align-items: center;
+}
+
+.header-title-label {
+    /* color: rgb(244, 244, 244); */
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 22px;
+}
+
+.header-title-spacer {
+    flex: 1 1 auto;
+}
+
+.header-img-logo {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    margin-right: 10px;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .header-img-logo {
+        animation: header-img-logo-spin infinite 20s linear;
+    }
+}
+
+@keyframes header-img-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
