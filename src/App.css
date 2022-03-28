@@ -9,13 +9,15 @@
 }
 
 .app-layout-body {
-  /* overflow: hidden;
-  overflow-y: auto; */
   position: absolute;
   top: 50px; /* minus header height */
   left: 0;
   width: 100%;
   bottom: 20px; /* minus footer height */
+  background-color: rgb(244, 244, 244);
+
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .app-layout-footer {

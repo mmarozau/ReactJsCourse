@@ -10,7 +10,6 @@ const ApplicationHeader = (props) => (
         <div>
             <img src={logo} className='header-img-logo' alt="logo" />
         </div>
-        <div className='a1'></div>
     </div>
 );
 
