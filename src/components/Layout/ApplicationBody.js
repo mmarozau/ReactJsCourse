@@ -1,6 +1,6 @@
 import './ApplicationBody.css'
 
-import Card from './Card';
+import Card from '../Card';
 
 const ApplicationBody = () => (
     <div className='body'>
