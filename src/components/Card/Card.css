@@ -1,0 +1,33 @@
+.card-body {
+    color: #333333;
+    background-color: rgb(198, 198, 198);
+
+    height: fit-content;
+    min-height: 250px;
+    width: 500px;
+    
+    white-space: pre-wrap;
+    padding: 4px;
+
+    outline: 1px #888888 solid;
+    border: 1px rgb(198, 198, 198) solid;
+    border-radius: 4px;
+}
+
+/* shall be after .card-body because of precedence */
+.card-body-selected {
+    /* background-color: rgb(206, 206, 206); */
+    
+    outline: 1px blue solid;
+    border: 1px blue solid;
+    border-radius: 4px;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-title-label {
+    font-weight: bold;
+}

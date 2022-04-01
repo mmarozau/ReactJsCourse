@@ -1,8 +1,8 @@
 import './App.css';
 
-import ApplicatioHeader from './components/ApplicationHeader';
-import ApplicationBody from './components/ApplicationBody';
-import ApplicationFooter from './components/ApplicationFooter';
+import ApplicatioHeader from './components/Layout/ApplicationHeader';
+import ApplicationBody from './components/Layout/ApplicationBody';
+import ApplicationFooter from './components/Layout/ApplicationFooter';
 
 
 const App = () => (
