@@ -1,9 +1,9 @@
 import './ApplicationBody.css'
 
-import Card from '../Card';
+import Card from '../Card/Card';
 
 const ApplicationBody = () => (
-    <div className='body'>
+    <div className="body">
         <Card cardTitle={'Sample Card'} cardText={'Sample text for sample card...'}></Card>
     </div>
 );

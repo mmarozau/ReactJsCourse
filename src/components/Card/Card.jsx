@@ -15,12 +15,12 @@ const Card = (props) => {
 
     return (
         <div className={`card-body ${isSelected ? 'card-body-selected' : ''}`}>
-            <div className='card-title'>
-                <div className='card-title-label'>{title || '<Card Title>'}</div>
-                <input type='checkbox' checked={isSelected} onChange={selectCardHandler} />
+            <div className="card-title">
+                <div className="card-title-label">{title || '<Card Title>'}</div>
+                <input type="checkbox" checked={isSelected} onChange={selectCardHandler} />
             </div>
             <br />
-            <div className='card-content'>{props.cardText || '<Card Content>'}</div>
+            <div className="card-content">{props.cardText || '<Card Content>'}</div>
         </div>
     )
 };
