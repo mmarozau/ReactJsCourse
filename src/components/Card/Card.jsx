@@ -43,20 +43,33 @@ const Card = (props) => {
 
     return (
         <div className={`card-body ${isSelected ? 'card-body-selected' : ''}`}>
-            <div className="card-title">
-                {!isEditMode ? <div className="card-title-label">{title || '<Card Title>'}</div> :
-                    <input type="text" className="input-title" value={inputTitle} onChange={inputTitleHandler} />}
-                <div className="card-title-controls">
-                    {!isEditMode && <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />}
-                    {!isEditMode && <input type="checkbox" checked={isSelected} onChange={selectCardHandler} />}
-                    {isEditMode && <AiOutlineCheck className="card-title-control-item" style={{ color: 'green' }} onClick={saveChanges} title="Save Changes" />}
-                    {isEditMode && <AiOutlineClose className="card-title-control-item" style={{ color: 'red' }} onClick={discardChanges} title="Save Changes" />}
+            {!isEditMode ? (
+                // Read Mode
+                <div>
+                    <div className="card-title">
+                        <div className="card-title-label">{title || '<Card Title>'}</div>
+                        <div className="card-title-controls">
+                            <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />
+                            <input type="checkbox" checked={isSelected} onChange={selectCardHandler} />
+                        </div>
+                    </div>
+                    <br />
+                    <div className="card-content">{text || '<Card Content>'}</div>
                 </div>
-            </div>
-            <br />
-            {!isEditMode ? <div className="card-content">{text || '<Card Content>'}</div> :
-                <textarea className="input-text" value={inputText} onChange={inputTextHandler}></textarea>}
-
+            ) : (
+                // Edit Mode
+                <div>
+                    <div className="card-title">
+                        <input type="text" className="input-title" value={inputTitle} onChange={inputTitleHandler} />
+                        <div className="card-title-controls">
+                            <AiOutlineCheck className="card-title-control-item" style={{ color: 'green' }} onClick={saveChanges} title="Save Changes" />
+                            <AiOutlineClose className="card-title-control-item" style={{ color: 'red' }} onClick={discardChanges} title="Save Changes" />
+                        </div>
+                    </div>
+                    <br />
+                    <textarea className="input-text" value={inputText} onChange={inputTextHandler}></textarea>
+                </div>
+            )}
         </div>
     )
 };
