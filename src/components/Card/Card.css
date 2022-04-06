@@ -5,11 +5,12 @@
     background-color: rgb(198, 198, 198);
 
     height: fit-content;
-    min-height: 250px;
-    width: 500px;
+    min-height: 248px;
+    width: 498px;
     
     white-space: pre-wrap;
     padding: 4px;
+    margin: 1px;
 
     outline: 1px #888888 solid;
     border: 1px rgb(198, 198, 198) solid;
