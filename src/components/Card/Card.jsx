@@ -4,17 +4,17 @@ import { AiFillEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
 
 import './Card.css';
 
-const Card = (props) => {
+const Card = ({ id, cardTitle, cardText, isSelected, isEditMode, isViewMode, onUpdateCardData }) => {
 
-    const [title, setTitle] = React.useState(props.cardTitle);
-    const [text, setText] = React.useState(props.cardText);
+    const [title, setTitle] = React.useState(cardTitle);
+    const [text, setText] = React.useState(cardText);
 
     const [inputTitle, setInputTitle] = React.useState('');
     const [inputText, setInputText] = React.useState('');
 
 
     const selectCardHandler = () => {
-        props.onSelectCard(props.id);
+        onUpdateCardData(id, { isSelected: !isSelected });
     }
     const inputTitleHandler = (event) => {
         setInputTitle(event.target.value);
@@ -26,29 +26,28 @@ const Card = (props) => {
     const editModeEnable = () => {
         setInputTitle(title);
         setInputText(text);
-        props.isSelected && props.onSelectCard(props.id, false);
-        props.onEditModeChange(props.id, true);
+        onUpdateCardData(id, { isEditMode: true, isSelected: false });
     }
 
     const saveChanges = () => {
         setTitle(inputTitle);
         setText(inputText);
-        props.onEditModeChange(props.id, false);
+        onUpdateCardData(id, { isEditMode: false });
     }
     const discardChanges = () => {
-        props.onEditModeChange(props.id, false);
+        onUpdateCardData(id, { isEditMode: false });
     }
 
     return (
-        <div className={`card-body ${props.isSelected ? 'card-body-selected' : ''}`}>
-            {!props.isEditMode ? (
+        <div className={`card-body ${isSelected ? 'card-body-selected' : ''}`}>
+            {!isEditMode ? (
                 // Read Mode
                 <div>
                     <div className="card-title">
                         <div className="card-title-label">{title || '<Card Title>'}</div>
                         <div className="card-title-controls">
-                            {!props.isViewMode && <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />}
-                            <input type="checkbox" checked={props.isSelected} onChange={selectCardHandler} />
+                            {!isViewMode && <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />}
+                            <input type="checkbox" checked={isSelected} onChange={selectCardHandler} />
                         </div>
                     </div>
                     <br />

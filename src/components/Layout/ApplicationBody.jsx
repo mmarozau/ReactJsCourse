@@ -69,17 +69,11 @@ const ApplicationBody = () => {
         });
     };
 
-    const selectCardHandler = (cardId, newVal = null) => {
+    const updateCardData = (cardId, newData) => {
         setCardsList((prevState) => prevState.map(el => {
-            return el.id === cardId ? { ...el, isSelected: (newVal === null ? !el.isSelected : newVal) } : el;
+            return el.id === cardId ? { ...el, ...newData } : el;
         }));
-    };
-
-    const changeEditMode = (cardId, editMode) => {
-        setCardsList((prevState) => prevState.map(el => {
-            return el.id === cardId ? { ...el, isEditMode: editMode } : el;
-        }));
-    };
+    }
 
     return (
         <div className="body">
@@ -91,8 +85,7 @@ const ApplicationBody = () => {
             <div className="page-cards-list">
                 {cardsList.map(el => (
                     <Card key={el.id} id={el.id} cardTitle={el.title} cardText={el.text}
-                        isSelected={el.isSelected} onSelectCard={selectCardHandler}
-                        isEditMode={el.isEditMode} onEditModeChange={changeEditMode}
+                        isSelected={el.isSelected} isEditMode={el.isEditMode} onUpdateCardData={updateCardData}
                         isViewMode={isViewMode}></Card>
                 ))}
             </div>
