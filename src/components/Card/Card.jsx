@@ -14,7 +14,7 @@ const Card = ({ id, cardTitle, cardText, isSelected, isEditMode, isViewMode, onU
 
 
     const selectCardHandler = () => {
-        onUpdateCardData(id, { isSelected: !isSelected });
+        onUpdateCardData({ id, isSelected: !isSelected });
     }
     const inputTitleHandler = (event) => {
         setInputTitle(event.target.value);
@@ -26,16 +26,16 @@ const Card = ({ id, cardTitle, cardText, isSelected, isEditMode, isViewMode, onU
     const editModeEnable = () => {
         setInputTitle(title);
         setInputText(text);
-        onUpdateCardData(id, { isEditMode: true, isSelected: false });
+        onUpdateCardData({ id, isEditMode: true, isSelected: false });
     }
 
     const saveChanges = () => {
         setTitle(inputTitle);
         setText(inputText);
-        onUpdateCardData(id, { isEditMode: false });
+        onUpdateCardData({ id, isEditMode: false });
     }
     const discardChanges = () => {
-        onUpdateCardData(id, { isEditMode: false });
+        onUpdateCardData({ id, isEditMode: false });
     }
 
     return (

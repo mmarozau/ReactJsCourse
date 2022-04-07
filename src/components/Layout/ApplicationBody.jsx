@@ -69,9 +69,9 @@ const ApplicationBody = () => {
         });
     };
 
-    const updateCardData = (cardId, newData) => {
+    const updateCardData = (newData) => {
         setCardsList((prevState) => prevState.map(el => {
-            return el.id === cardId ? { ...el, ...newData } : el;
+            return el.id === newData.id ? { ...el, ...newData } : el;
         }));
     }
 
