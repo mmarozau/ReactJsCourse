@@ -69,11 +69,11 @@ const ApplicationBody = () => {
         });
     };
 
-    const updateCardData = (newData) => {
+    const updateCardData = (newCard) => {
         setCardsList((prevState) => prevState.map(el => {
-            return el.id === newData.id ? { ...el, ...newData } : el;
+            return el.id === newCard.id ? newCard : el;
         }));
-    }
+    };
 
     return (
         <div className="body">

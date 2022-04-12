@@ -4,7 +4,9 @@ import { AiFillEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
 
 import './Card.css';
 
-const Card = ({ id, cardTitle, cardText, isSelected, isEditMode, isViewMode, onUpdateCardData }) => {
+const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
+
+    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo
 
     const [title, setTitle] = React.useState(cardTitle);
     const [text, setText] = React.useState(cardText);
@@ -14,7 +16,7 @@ const Card = ({ id, cardTitle, cardText, isSelected, isEditMode, isViewMode, onU
 
 
     const selectCardHandler = () => {
-        onUpdateCardData({ id, isSelected: !isSelected });
+        onUpdateCardData({ ...cardInfo, isSelected: !isSelected })
     }
     const inputTitleHandler = (event) => {
         setInputTitle(event.target.value);
@@ -26,16 +28,16 @@ const Card = ({ id, cardTitle, cardText, isSelected, isEditMode, isViewMode, onU
     const editModeEnable = () => {
         setInputTitle(title);
         setInputText(text);
-        onUpdateCardData({ id, isEditMode: true, isSelected: false });
+        onUpdateCardData({ ...cardInfo, isEditMode: true, isSelected: false });
     }
 
     const saveChanges = () => {
         setTitle(inputTitle);
         setText(inputText);
-        onUpdateCardData({ id, isEditMode: false });
+        onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
     const discardChanges = () => {
-        onUpdateCardData({ id, isEditMode: false });
+        onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
 
     return (
