@@ -4,22 +4,22 @@ import { AiFillEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
 
 import './Card.css';
 
-const Card = (props) => {
+const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
 
-    const [isSelected, setIsSelected] = React.useState(false);
-    const [isEditMode, setIsEditMode] = React.useState(false);
-    const [title, setTitle] = React.useState(props.cardTitle);
-    const [text, setText] = React.useState(props.cardText);
+    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo
+
+    const [title, setTitle] = React.useState(cardTitle);
+    const [text, setText] = React.useState(cardText);
 
     const [inputTitle, setInputTitle] = React.useState('');
     const [inputText, setInputText] = React.useState('');
 
 
     const selectCardHandler = () => {
-        setIsSelected(!isSelected);
+        onUpdateCardData({ ...cardInfo, isSelected: !isSelected })
     }
     const inputTitleHandler = (event) => {
-        setInputTitle(event.target.value)
+        setInputTitle(event.target.value);
     }
     const inputTextHandler = (event) => {
         setInputText(event.target.value);
@@ -28,17 +28,16 @@ const Card = (props) => {
     const editModeEnable = () => {
         setInputTitle(title);
         setInputText(text);
-        isSelected && setIsSelected(false);
-        setIsEditMode(true);
+        onUpdateCardData({ ...cardInfo, isEditMode: true, isSelected: false });
     }
 
     const saveChanges = () => {
         setTitle(inputTitle);
         setText(inputText);
-        setIsEditMode(false);
+        onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
     const discardChanges = () => {
-        setIsEditMode(false);
+        onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
 
     return (
@@ -49,7 +48,7 @@ const Card = (props) => {
                     <div className="card-title">
                         <div className="card-title-label">{title || '<Card Title>'}</div>
                         <div className="card-title-controls">
-                            <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />
+                            {!isViewMode && <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />}
                             <input type="checkbox" checked={isSelected} onChange={selectCardHandler} />
                         </div>
                     </div>
@@ -63,7 +62,7 @@ const Card = (props) => {
                         <input type="text" className="input-title" value={inputTitle} onChange={inputTitleHandler} />
                         <div className="card-title-controls">
                             <AiOutlineCheck className="card-title-control-item" style={{ color: 'green' }} onClick={saveChanges} title="Save Changes" />
-                            <AiOutlineClose className="card-title-control-item" style={{ color: 'red' }} onClick={discardChanges} title="Save Changes" />
+                            <AiOutlineClose className="card-title-control-item" style={{ color: 'red' }} onClick={discardChanges} title="Discard Changes" />
                         </div>
                     </div>
                     <br />
@@ -71,7 +70,7 @@ const Card = (props) => {
                 </div>
             )}
         </div>
-    )
+    );
 };
 
 export default Card;

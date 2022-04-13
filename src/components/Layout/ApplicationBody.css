@@ -1,11 +1,42 @@
 .body {
+    background-color: inherit;
     position: relative;
 
     height: 100% - 50px;
     min-height: 100%;
 
     margin: 0;
+}
+
+.page-control-tab {
+    background-color: inherit;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    position: sticky;
+    z-index: 499;
+    top: 0;
+    right: 0;
+    width: fit-content;
+    
+    min-height: 25px;
+    padding: 2px 12px 2px 12px;
+
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: end;
+}
+
+.page-control-checkbox {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+}
+
+.page-cards-list {
+    position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 16px;
 }
