@@ -41,7 +41,7 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
     }
 
     return (
-        <div className={`card-body ${isSelected ? 'card-body-selected' : ''}`}>
+        <div className={`card-body ${isSelected ? 'selected' : ''}`}>
             {!isEditMode ? (
                 // Read Mode
                 <div>

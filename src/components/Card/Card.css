@@ -18,7 +18,7 @@
 }
 
 /* shall be after .card-body because of precedence */
-.card-body-selected {
+.card-body.selected {
     /* background-color: rgb(206, 206, 206); */
     
     outline: 1px blue solid;
