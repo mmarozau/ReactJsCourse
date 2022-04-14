@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 
 import './ApplicationBody.css'
 
@@ -56,6 +57,13 @@ const INITIAL_CARDS_LIST = [
     }
 ];
 
+const PageControlCBLabel = styled.span`
+    & {
+        color: ${(props) => props.checked ? 'green' : 'initial'};
+        border-bottom: ${(props) => props.checked ? '1px dashed green' : 'none'};
+    }
+`;
+
 const ApplicationBody = () => {
     const [cardsList, setCardsList] = useState(INITIAL_CARDS_LIST);
     const [isViewMode, setIsViewMode] = useState(false);
@@ -79,7 +87,8 @@ const ApplicationBody = () => {
         <div className="body">
             <div className="page-control-tab">
                 <div className="page-control-checkbox">
-                    <input type="checkbox" checked={isViewMode} onChange={isViewModeHandler} /><span>View only</span>
+                    <input type="checkbox" checked={isViewMode} onChange={isViewModeHandler} />
+                    <PageControlCBLabel checked={isViewMode}>View only</PageControlCBLabel>
                 </div>
             </div>
             <div className="page-cards-list">
