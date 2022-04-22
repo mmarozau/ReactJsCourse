@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import './ApplicationBody.css'
 
-import Card from '../Card/Card';
+import ModalContext from '../../contexts/modal-context';
+import CardList from '../Card/CardList';
+
 
 const INITIAL_CARDS_LIST = [
     {
@@ -57,18 +59,37 @@ const INITIAL_CARDS_LIST = [
     }
 ];
 
+const VIEW_MODE_LABEL = 'View only';
+
 const PageControlCBLabel = styled.span`
     & {
-        color: ${(props) => props.checked ? 'green' : 'initial'};
-        border-bottom: ${(props) => props.checked ? '1px dashed green' : 'none'};
+        font-weight: ${(props) => props.checked ? 'bold' : 'initial'};
+    }
+
+    &::after {
+        display: block;
+        content: "${VIEW_MODE_LABEL}";
+        font-weight: bold;
+        height: 0px;
+        color: transparent;
+        overflow: hidden;
+        visibility: hidden;
     }
 `;
 
+
 const ApplicationBody = () => {
+    const modalCtx = useContext(ModalContext);
+
     const [cardsList, setCardsList] = useState(INITIAL_CARDS_LIST);
     const [isViewMode, setIsViewMode] = useState(false);
+    const [isSomeSelected, setIsSomeSelected] = useState(false);
 
-    const isViewModeHandler = () => {
+    const isViewModeHandler = (event) => {
+        event.stopPropagation();
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
         setIsViewMode((prevState) => {
             if (!prevState === true) {
                 setCardsList((prevState) => prevState.map(el => ({ ...el, isEditMode: false })));
@@ -78,26 +99,46 @@ const ApplicationBody = () => {
     };
 
     const updateCardData = (newCard) => {
-        setCardsList((prevState) => prevState.map(el => {
-            return el.id === newCard.id ? newCard : el;
-        }));
+        setCardsList((prevState) => {
+            const newState = prevState.map(el => (el.id === newCard.id ? newCard : el));
+
+            const newIsSomeSelected = newState.findIndex(el => (el.isSelected === true)) !== -1;
+            if (newIsSomeSelected !== isSomeSelected) setIsSomeSelected(newIsSomeSelected);
+
+            return newState;
+        });
     };
+
+    const deleteSelected = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
+        if (!isSomeSelected) return;
+
+        const selectedIds = cardsList.filter(el => el.isSelected).map(el => el.id);
+        modalCtx.createModal('confirmation', null, `Would you like to delete selected (${selectedIds.length}) cards?`,
+            null, () => {
+                setIsSomeSelected(false);
+                setCardsList((prevState) => {
+                    return prevState.filter(el => !(el.isSelected));
+                });
+            }
+        );
+    }
 
     return (
         <div className="body">
             <div className="page-control-tab">
-                <div className="page-control-checkbox">
-                    <input type="checkbox" checked={isViewMode} onChange={isViewModeHandler} />
-                    <PageControlCBLabel checked={isViewMode}>View only</PageControlCBLabel>
+                <div className="page-control-element" onClick={isViewModeHandler} onKeyDown={isViewModeHandler}
+                    onKeyUp={isViewModeHandler} tabIndex="0">
+                    <input type="checkbox" checked={isViewMode} readOnly={true} tabIndex="-1" />
+                    <PageControlCBLabel checked={isViewMode}> {VIEW_MODE_LABEL}</PageControlCBLabel>
                 </div>
+                <div>|</div>
+                <div className="page-control-element" style={!isSomeSelected ? { color: 'grey' } : {}}
+                    onClick={deleteSelected} onKeyDown={deleteSelected} onKeyUp={deleteSelected} tabIndex="0">Delete Selected</div>
             </div>
-            <div className="page-cards-list">
-                {cardsList.map(el => (
-                    <Card key={el.id} id={el.id} cardTitle={el.title} cardText={el.text}
-                        isSelected={el.isSelected} isEditMode={el.isEditMode} onUpdateCardData={updateCardData}
-                        isViewMode={isViewMode}></Card>
-                ))}
-            </div>
+            <CardList cardsList={cardsList} isViewMode={isViewMode} onUpdateCardData={updateCardData} />
         </div>
     );
 };
