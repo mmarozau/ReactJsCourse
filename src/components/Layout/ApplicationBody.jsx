@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import './ApplicationBody.css'
@@ -98,7 +98,7 @@ const ApplicationBody = () => {
         });
     };
 
-    const updateCardData = (newCard) => {
+    const updateCardData = useCallback((newCard) => {
         setCardsList((prevState) => {
             const newState = prevState.map(el => (el.id === newCard.id ? newCard : el));
 
@@ -107,7 +107,7 @@ const ApplicationBody = () => {
 
             return newState;
         });
-    };
+    }, [isSomeSelected]);
 
     const deleteSelected = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();

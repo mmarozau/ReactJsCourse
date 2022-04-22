@@ -1,3 +1,5 @@
+import React from 'react';
+
 import logo from '../../logo.svg'
 import './ApplicationHeader.css';
 
@@ -13,4 +15,4 @@ const ApplicationHeader = (props) => (
     </div>
 );
 
-export default ApplicationHeader;
+export default React.memo(ApplicationHeader);

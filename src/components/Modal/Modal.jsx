@@ -6,7 +6,7 @@ import ModalHeader from './ModalHeader';
 import ModalButton from './ModalButton';
 
 
-const Modal = ({ type, title, message, onModalClose, /*onModalConfirm*/ }) => {
+const Modal = ({ type, title, message, onModalClose }) => {
     const modalType = (type && ['information', 'confirmation'].includes(type)) ? type : 'information';
     const modalTitle = title || (modalType === 'information' ? 'Information' : 'Confirmation');
 
@@ -38,7 +38,8 @@ const Modal = ({ type, title, message, onModalClose, /*onModalConfirm*/ }) => {
                         <ModalButton onButton={modalCloseHandler}><AiOutlineClose style={{ color: 'red' }} />
                             <span>Cancel</span></ModalButton>
                         <ModalButton onButton={modalConfirmHandler}><AiOutlineCheck style={{ color: 'green' }} />
-                            <span>Yes</span></ModalButton></div>
+                            <span>Yes</span></ModalButton>
+                    </div>
                 ) : null}
             </div>
             <div className={styles.overlay} onClick={modalCloseHandler}></div>
