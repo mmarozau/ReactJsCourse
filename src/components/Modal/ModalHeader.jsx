@@ -5,11 +5,19 @@ import styles from './ModalHeader.module.css';
 
 const ModalHeader = ({ title, onModalClose }) => {
 
+    const onButtonHandler = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
+        onModalClose();
+    }
+
     return (
         <div className={styles['modal-title']}>
             <div className={styles['modal-title-label']}>{title}</div>
-            <div className={styles['modal-title-close-btn-wrp']} tabIndex="0">
-                <div className={styles['modal-title-close-btn']} onClick={onModalClose}>
+            <div className={styles['modal-title-close-btn-wrp']}>
+                <div className={styles['modal-title-close-btn']} onClick={onButtonHandler}
+                    onKeyDown={onButtonHandler} onKeyUp={onButtonHandler} tabIndex="0">
                     <AiOutlineClose />
                 </div>
             </div>
