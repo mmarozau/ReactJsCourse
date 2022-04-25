@@ -12,7 +12,7 @@ const ModalButton = ({ onButton, children }) => {
 
     return (
         <div className={styles['button-wrp']}>
-            <div className={styles['button']} onClick={onButtonHandler} onKeyDown={onButtonHandler} onKeyUp={onButtonHandler}tabIndex="0">
+            <div className={styles['button']} onClick={onButtonHandler} onKeyDown={onButtonHandler} onKeyUp={onButtonHandler} tabIndex="0">
                 <div className={styles['button-label']}>{children}</div>
             </div>
         </div>

@@ -116,6 +116,7 @@ const ApplicationBody = () => {
         if (!isSomeSelected) return;
 
         const selectedIds = cardsList.filter(el => el.isSelected).map(el => el.id);
+
         modalCtx.createModal('confirmation', null, `Would you like to delete selected (${selectedIds.length}) cards?`,
             null, () => {
                 setIsSomeSelected(false);

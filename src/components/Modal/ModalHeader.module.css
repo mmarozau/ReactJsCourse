@@ -41,7 +41,5 @@
 }
 
 .modal-title-close-btn:hover {
-    /* filter: contrast(125%);
-    backdrop-filter: invert(25%); */
     border: 1px solid #333333;
 }
