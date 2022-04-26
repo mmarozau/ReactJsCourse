@@ -131,6 +131,8 @@ const ApplicationBody = () => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
+        if (isViewMode) return;
+
         const newCardId = Math.max(...cardsList.map(el => el.id)) + 1;
         setCardsList((prevState) => {
             return [...prevState, {
