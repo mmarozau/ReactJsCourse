@@ -1,12 +1,15 @@
 import React from 'react'; // trying useState without destructuring from React
 // import { useState } from 'react';
-import { AiFillEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai'
 
-import './Card.css';
+import styles from './Card.module.css';
+
+import CardHeader from './CardHeader';
+import CardBody from './CardBody';
+
 
 const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
 
-    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo
+    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo;
 
     const [title, setTitle] = React.useState(cardTitle);
     const [text, setText] = React.useState(cardText);
@@ -25,52 +28,40 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
         setInputText(event.target.value);
     }
 
-    const editModeEnable = () => {
+    const editModeEnable = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
         setInputTitle(title);
         setInputText(text);
         onUpdateCardData({ ...cardInfo, isEditMode: true, isSelected: false });
     }
 
-    const saveChanges = () => {
+    const saveChanges = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
         setTitle(inputTitle);
         setText(inputText);
         onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
-    const discardChanges = () => {
+    const discardChanges = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
         onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
 
     return (
-        <div className={`card-body ${isSelected ? 'selected' : ''}`}>
-            {!isEditMode ? (
-                // Read Mode
-                <div>
-                    <div className="card-title">
-                        <div className="card-title-label">{title || '<Card Title>'}</div>
-                        <div className="card-title-controls">
-                            {!isViewMode && <AiFillEdit className="card-title-control-item" onClick={editModeEnable} title="Edit" />}
-                            <input type="checkbox" checked={isSelected} onChange={selectCardHandler} />
-                        </div>
-                    </div>
-                    <br />
-                    <div className="card-content">{text || '<Card Content>'}</div>
-                </div>
-            ) : (
-                // Edit Mode
-                <div>
-                    <div className="card-title">
-                        <input type="text" className="input-title" value={inputTitle} onChange={inputTitleHandler} />
-                        <div className="card-title-controls">
-                            <AiOutlineCheck className="card-title-control-item" style={{ color: 'green' }} onClick={saveChanges} title="Save Changes" />
-                            <AiOutlineClose className="card-title-control-item" style={{ color: 'red' }} onClick={discardChanges} title="Discard Changes" />
-                        </div>
-                    </div>
-                    <br />
-                    <textarea className="input-text" value={inputText} onChange={inputTextHandler}></textarea>
-                </div>
-            )}
+        <div className={`${styles['card-body']} ${isSelected ? styles['selected'] : ''}`}>
+            <CardHeader title={title} inputTitle={inputTitle} isEditMode={isEditMode} isSelected={isSelected}
+                isViewMode={isViewMode}
+                onTitleInput={inputTitleHandler} onSelect={selectCardHandler} onEditModeEnable={editModeEnable}
+                onSave={saveChanges} onDiscard={discardChanges} />
+            <br />
+            <CardBody text={text} inputText={inputText} isEditMode={isEditMode} onTextInput={inputTextHandler} />
         </div>
     );
 };
 
-export default Card;
+export default React.memo(Card);

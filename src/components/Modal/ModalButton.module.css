@@ -1,0 +1,33 @@
+.button-wrp {
+    width: 100%;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    width: calc(100% - (4px * 2));
+    height: calc(100% - (4px * 2));
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    user-select: none;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+
+.button:hover {
+    border-color: #333333;
+    backdrop-filter: invert(25%);;
+}
+
+.button-label {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+}

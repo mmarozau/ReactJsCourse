@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './ApplicationFooter.css';
 
 const ApplicationFooter = () => (
@@ -8,4 +10,4 @@ const ApplicationFooter = () => (
     </div>
 );
 
-export default ApplicationFooter;
+export default React.memo(ApplicationFooter);
