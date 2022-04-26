@@ -127,6 +127,22 @@ const ApplicationBody = () => {
         );
     }
 
+    const addNewCard = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
+
+        const newCardId = Math.max(...cardsList.map(el => el.id)) + 1;
+        setCardsList((prevState) => {
+            return [...prevState, {
+                id: newCardId,
+                title: '',
+                text: '',
+                isSelected: false,
+                isEditMode: true
+            }];
+        });
+    };
+
     return (
         <div className="body">
             <div className="page-control-tab">
@@ -135,6 +151,9 @@ const ApplicationBody = () => {
                     <input type="checkbox" checked={isViewMode} readOnly={true} tabIndex="-1" />
                     <PageControlCBLabel checked={isViewMode}> {VIEW_MODE_LABEL}</PageControlCBLabel>
                 </div>
+                <div>|</div>
+                <div className="page-control-element" style={isViewMode ? { color: 'grey' } : {}}
+                    onClick={addNewCard} onKeyDown={addNewCard} onKeyUp={addNewCard} tabIndex="0">Add New Card</div>
                 <div>|</div>
                 <div className="page-control-element" style={!isSomeSelected ? { color: 'grey' } : {}}
                     onClick={deleteSelected} onKeyDown={deleteSelected} onKeyUp={deleteSelected} tabIndex="0">Delete Selected</div>
