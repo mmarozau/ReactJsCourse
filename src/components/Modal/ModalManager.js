@@ -6,9 +6,9 @@ import Modal from "./Modal";
 const ModalManager = (props) => {
     const [modalData, setModalData] = useState({ isModalActive: false });
 
-    const createModal = (type, title, message, onClose, onConfirm) => {
+    const createModal = (type, title, content, onClose, onConfirm) => {
         if (modalData.isModalActive) return;
-        setModalData({ isModalActive: true, type: type, title: title, message: message, onClose: onClose, onConfirm: onConfirm });
+        setModalData({ isModalActive: true, type: type, title: title, content: content, onClose: onClose, onConfirm: onConfirm });
     };
 
     const closeModalHandler = (result) => {
@@ -22,8 +22,8 @@ const ModalManager = (props) => {
 
     return (
         <ModalContext.Provider value={{ createModal }}>
-            {modalData.isModalActive && <Modal type={modalData.type} title={modalData.title} message={modalData.message}
-                onModalClose={closeModalHandler} />}
+            <Modal isModalActive={modalData.isModalActive} type={modalData.type} title={modalData.title} content={modalData.content}
+                onModalClose={closeModalHandler} />
             {props.children}
         </ModalContext.Provider>
     );
