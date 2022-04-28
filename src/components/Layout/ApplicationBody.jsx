@@ -13,49 +13,56 @@ const INITIAL_CARDS_LIST = [
         title: 'Sample Card 1',
         text: 'Sample text for sample card 1...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     },
     {
         id: 2,
         title: 'Sample Card 2',
         text: 'Sample text for sample card 2...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     },
     {
         id: 3,
         title: 'Sample Card 3',
         text: 'Sample text for sample card 3...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     },
     {
         id: 4,
         title: 'Sample Card 4',
         text: 'Sample text for sample card 4...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     },
     {
         id: 5,
         title: 'Sample Card 5',
         text: 'Sample text for sample card 5...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     },
     {
         id: 6,
         title: 'Sample Card 6',
         text: 'Sample text for sample card 6...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     },
     {
         id: 7,
         title: 'Sample Card 7',
         text: 'Sample text for sample card 7...',
         isSelected: false,
-        isEditMode: false
+        isEditMode: false,
+        isLoading: true
     }
 ];
 
@@ -140,7 +147,8 @@ const ApplicationBody = () => {
                 title: '',
                 text: '',
                 isSelected: false,
-                isEditMode: true
+                isEditMode: true,
+                isLoading: true,
             }];
         });
     };

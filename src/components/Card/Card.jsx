@@ -1,4 +1,4 @@
-import React from 'react'; // trying useState without destructuring from React
+import React, { useEffect } from 'react'; // trying useState without destructuring from React
 // import { useState } from 'react';
 
 import styles from './Card.module.css';
@@ -6,10 +6,12 @@ import styles from './Card.module.css';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 
+import Loading from '../Loading/Loading';
+
 
 const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
 
-    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo;
+    const { id, cardTitle, cardText, isSelected, isEditMode, isLoading } = cardInfo;
 
     const [title, setTitle] = React.useState(cardTitle);
     const [text, setText] = React.useState(cardText);
@@ -52,14 +54,20 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
         onUpdateCardData({ ...cardInfo, isEditMode: false });
     }
 
+    useEffect(() => {
+        setTimeout(() => { onUpdateCardData({ ...cardInfo, isLoading: false }) }, 2000);
+    }, []);
+
     return (
         <div className={`${styles['card-body']} ${isSelected ? styles['selected'] : ''}`}>
-            <CardHeader title={title} inputTitle={inputTitle} isEditMode={isEditMode} isSelected={isSelected}
-                isViewMode={isViewMode}
-                onTitleInput={inputTitleHandler} onSelect={selectCardHandler} onEditModeEnable={editModeEnable}
-                onSave={saveChanges} onDiscard={discardChanges} />
-            <br />
-            <CardBody text={text} inputText={inputText} isEditMode={isEditMode} onTextInput={inputTextHandler} />
+            <Loading isLoading={isLoading} isSkeletonLoader={true}>
+                <CardHeader title={title} inputTitle={inputTitle} isEditMode={isEditMode} isSelected={isSelected}
+                    isViewMode={isViewMode}
+                    onTitleInput={inputTitleHandler} onSelect={selectCardHandler} onEditModeEnable={editModeEnable}
+                    onSave={saveChanges} onDiscard={discardChanges} />
+                <br />
+                <CardBody text={text} inputText={inputText} isEditMode={isEditMode} onTextInput={inputTextHandler} />
+            </Loading>
         </div>
     );
 };
