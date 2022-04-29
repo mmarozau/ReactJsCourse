@@ -9,7 +9,7 @@ const CardList = ({ cardsList, isViewMode, onUpdateCardData }) => {
         <div className={styles['page-cards-list']}>
             {cardsList.map(el => (
                 <Card key={el.id} id={el.id} cardTitle={el.title} cardText={el.text}
-                    isSelected={el.isSelected} isEditMode={el.isEditMode}
+                    isSelected={el.isSelected} isEditMode={el.isEditMode} isLoading={el.isLoading}
                     isViewMode={isViewMode} onUpdateCardData={onUpdateCardData}></Card>
             ))}
         </div>

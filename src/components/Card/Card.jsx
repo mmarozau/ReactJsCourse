@@ -6,10 +6,12 @@ import styles from './Card.module.css';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 
+import withLoading from '../withLoading/withLoading';
+
 
 const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
 
-    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo;
+    const { id, cardTitle, cardText, isSelected, isEditMode, isLoading } = cardInfo;
 
     const [title, setTitle] = React.useState(cardTitle);
     const [text, setText] = React.useState(cardText);
@@ -64,4 +66,4 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
     );
 };
 
-export default React.memo(Card);
+export default React.memo(withLoading(Card, '510px', '260px'));
