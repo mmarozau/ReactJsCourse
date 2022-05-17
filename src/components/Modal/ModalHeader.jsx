@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { AiOutlineClose } from 'react-icons/ai';
 
 import styles from './ModalHeader.module.css';
@@ -23,6 +24,11 @@ const ModalHeader = ({ title, onModalClose }) => {
             </div>
         </div>
     );
+};
+
+ModalHeader.propTypes = {
+    title: PropTypes.string,
+    onModalClose: PropTypes.func.isRequired
 };
 
 export default ModalHeader;

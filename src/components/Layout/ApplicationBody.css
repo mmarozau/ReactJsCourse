@@ -21,6 +21,9 @@
     min-height: 25px;
     padding: 2px 12px 2px 12px;
 
+    cursor: default;
+    user-select: none;
+
     display: flex;
     align-items: center;
     justify-content: end;
@@ -36,7 +39,6 @@
     margin: 2px 0 2px 0;
 
     cursor: pointer;
-    user-select: none;
 
     border: 1px solid transparent;
     border-radius: 2px;

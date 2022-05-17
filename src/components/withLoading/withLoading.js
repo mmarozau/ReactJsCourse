@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './withLoading.module.css';
 
@@ -29,6 +30,12 @@ const withLoading = (Component, width, height) => {
             </>
         );
     }
+};
+
+withLoading.propTypes = {
+    Component: PropTypes.elementType.isRequired,
+    width: PropTypes.string,
+    height: PropTypes.string
 };
 
 export default withLoading;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import FocusTrap from 'focus-trap-react';
 
@@ -6,10 +7,12 @@ import styles from './Modal.module.css';
 import ModalHeader from './ModalHeader';
 import ModalButton from './ModalButton';
 
+import { modalTypes } from './modal-constants.js';
+
 
 const Modal = ({ isModalActive, type, title, content, onModalClose }) => {
-    const modalType = (type && ['information', 'confirmation'].includes(type)) ? type : 'information';
-    const modalTitle = title || (modalType === 'information' ? 'Information' : 'Confirmation');
+    const modalType = (type && Object.values(modalTypes).includes(type)) ? type : modalTypes.TYPE_INFO;
+    const modalTitle = title || type;
 
     const modalCloseHandler = () => {
         onModalClose(false);
@@ -33,9 +36,9 @@ const Modal = ({ isModalActive, type, title, content, onModalClose }) => {
                                 <ModalHeader title={modalTitle} onModalClose={modalCloseHandler} />
                             </div>
                             <div className={styles['body-block']}>{content || ''}</div>
-                            {modalType === 'information' ? (<div className={styles['buttons-block']}>
+                            {modalType === modalTypes.TYPE_INFO ? (<div className={styles['buttons-block']}>
                                 <ModalButton onButton={modalCloseHandler}><span>Ok</span></ModalButton></div>) : null}
-                            {modalType === 'confirmation' ? (
+                            {modalType === modalTypes.TYPE_CONF ? (
                                 <div className={styles['buttons-block']}>
                                     <ModalButton onButton={modalCloseHandler}><AiOutlineClose style={{ color: 'red' }} />
                                         <span>Cancel</span></ModalButton>
@@ -51,6 +54,14 @@ const Modal = ({ isModalActive, type, title, content, onModalClose }) => {
         </>
 
     );
+};
+
+Modal.propTypes = {
+    isModalActive: PropTypes.bool.isRequired,
+    type: PropTypes.oneOf(Object.values(modalTypes)),
+    title: PropTypes.string,
+    content: PropTypes.any,
+    onModalClose: PropTypes.func.isRequired
 };
 
 export default Modal;

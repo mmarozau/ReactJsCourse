@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { AiFillEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
 import styles from './CardHeader.module.css'
@@ -32,6 +33,19 @@ const CardHeader = ({ title, inputTitle, isEditMode, isSelected, isViewMode,
             )}
         </div>
     );
+};
+
+CardHeader.propTypes = {
+    title: PropTypes.string.isRequired,
+    inputTitle: PropTypes.string.isRequired,
+    isEditMode: PropTypes.bool.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    isViewMode: PropTypes.bool,
+    onTitleInput: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onEditModeEnable: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onDiscard: PropTypes.func.isRequired
 };
 
 export default CardHeader;

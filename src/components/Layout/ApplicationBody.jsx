@@ -1,63 +1,13 @@
-import { useCallback, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import './ApplicationBody.css'
 
 import ModalContext from '../../contexts/modal-context';
+import Tag from '../Tag/Tag';
+import CardsDataContext from '../../contexts/cards-data-context'; // delete after moving to manager - need to check?
 import CardList from '../Card/CardList';
 
-
-const INITIAL_CARDS_LIST = [
-    {
-        id: 1,
-        title: 'Sample Card 1',
-        text: 'Sample text for sample card 1...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 2,
-        title: 'Sample Card 2',
-        text: 'Sample text for sample card 2...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 3,
-        title: 'Sample Card 3',
-        text: 'Sample text for sample card 3...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 4,
-        title: 'Sample Card 4',
-        text: 'Sample text for sample card 4...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 5,
-        title: 'Sample Card 5',
-        text: 'Sample text for sample card 5...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 6,
-        title: 'Sample Card 6',
-        text: 'Sample text for sample card 6...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 7,
-        title: 'Sample Card 7',
-        text: 'Sample text for sample card 7...',
-        isSelected: false,
-        isEditMode: false
-    }
-];
 
 const VIEW_MODE_LABEL = 'View only';
 
@@ -80,52 +30,37 @@ const PageControlCBLabel = styled.span`
 
 const ApplicationBody = () => {
     const modalCtx = useContext(ModalContext);
+    const cardsDataCtx = useContext(CardsDataContext);
 
-    const [cardsList, setCardsList] = useState(INITIAL_CARDS_LIST);
     const [isViewMode, setIsViewMode] = useState(false);
-    const [isSomeSelected, setIsSomeSelected] = useState(false);
 
     const isViewModeHandler = (event) => {
         event.stopPropagation();
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
-        setIsViewMode((prevState) => {
-            if (!prevState === true) {
-                setCardsList((prevState) => prevState.map(el => ({ ...el, isEditMode: false })));
-            }
-            return !prevState;
-        });
+        setIsViewMode((prevState) => !prevState);
     };
-
-    const updateCardData = useCallback((newCard) => {
-        setCardsList((prevState) => {
-            const newState = prevState.map(el => (el.id === newCard.id ? newCard : el));
-
-            const newIsSomeSelected = newState.findIndex(el => (el.isSelected === true)) !== -1;
-            if (newIsSomeSelected !== isSomeSelected) setIsSomeSelected(newIsSomeSelected);
-
-            return newState;
-        });
-    }, [isSomeSelected]);
+    useEffect(() => {
+        if (isViewMode === true) cardsDataCtx.disableEditModeAll();
+    }, [isViewMode]);
 
     const deleteSelected = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
-        if (!isSomeSelected) return;
+        if (!cardsDataCtx.isSomeSelected) return;
 
-        const selectedIds = cardsList.filter(el => el.isSelected).map(el => el.id);
+        cardsDataCtx.deleteCard();
 
-        modalCtx.createModal('confirmation', null, `Would you like to delete selected (${selectedIds.length}) cards?`,
+        const selectedIds = cardsDataCtx.cardsList.filter(el => el.isSelected).map(el => el.id);
+
+        modalCtx.createModal(modalCtx.modalTypes.TYPE_CONF, null, `Would you like to delete selected (${selectedIds.length}) cards?`,
             null, () => {
-                setIsSomeSelected(false);
-                setCardsList((prevState) => {
-                    return prevState.filter(el => !(el.isSelected));
-                });
+                cardsDataCtx.deleteCard(selectedIds);
             }
         );
-    }
+    };
 
     const addNewCard = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
@@ -133,17 +68,9 @@ const ApplicationBody = () => {
 
         if (isViewMode) return;
 
-        const newCardId = Math.max(...cardsList.map(el => el.id)) + 1;
-        setCardsList((prevState) => {
-            return [...prevState, {
-                id: newCardId,
-                title: '',
-                text: '',
-                isSelected: false,
-                isEditMode: true
-            }];
-        });
+        cardsDataCtx.addCard();
     };
+
 
     return (
         <div className="body">
@@ -157,10 +84,12 @@ const ApplicationBody = () => {
                 <div className="page-control-element" style={isViewMode ? { color: 'grey' } : {}}
                     onClick={addNewCard} onKeyDown={addNewCard} onKeyUp={addNewCard} tabIndex="0">Add New Card</div>
                 <div>|</div>
-                <div className="page-control-element" style={!isSomeSelected ? { color: 'grey' } : {}}
+                <div className="page-control-element" style={!cardsDataCtx.isSomeSelected ? { color: 'grey' } : {}}
                     onClick={deleteSelected} onKeyDown={deleteSelected} onKeyUp={deleteSelected} tabIndex="0">Delete Selected</div>
+                <div>|</div>
+                <Tag label={`${cardsDataCtx.cardsList.length} Cards`} type={'high-contrast'} />
             </div>
-            <CardList cardsList={cardsList} isViewMode={isViewMode} onUpdateCardData={updateCardData} />
+            <CardList isViewMode={isViewMode} />
         </div>
     );
 };

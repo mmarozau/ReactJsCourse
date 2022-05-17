@@ -1,5 +1,6 @@
 import React from 'react'; // trying useState without destructuring from React
 // import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './Card.module.css';
 
@@ -11,10 +12,7 @@ import withLoading from '../withLoading/withLoading';
 
 const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
 
-    const { id, cardTitle, cardText, isSelected, isEditMode } = cardInfo;
-
-    const [title, setTitle] = React.useState(cardTitle);
-    const [text, setText] = React.useState(cardText);
+    const { id, title, text, isSelected, isEditMode } = cardInfo;
 
     const [inputTitle, setInputTitle] = React.useState('');
     const [inputText, setInputText] = React.useState('');
@@ -22,13 +20,13 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
 
     const selectCardHandler = () => {
         onUpdateCardData({ ...cardInfo, isSelected: !isSelected })
-    }
+    };
     const inputTitleHandler = (event) => {
         setInputTitle(event.target.value);
-    }
+    };
     const inputTextHandler = (event) => {
         setInputText(event.target.value);
-    }
+    };
 
     const editModeEnable = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
@@ -43,9 +41,7 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
-        setTitle(inputTitle);
-        setText(inputText);
-        onUpdateCardData({ ...cardInfo, isEditMode: false });
+        onUpdateCardData({ ...cardInfo, title: inputTitle, text: inputText, isEditMode: false });
     }
     const discardChanges = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
@@ -66,4 +62,14 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
     );
 };
 
-export default React.memo(withLoading(Card, '510px', '260px'));
+Card.propTypes = {
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    isEditMode: PropTypes.bool.isRequired,
+    isViewMode: PropTypes.bool,
+    onUpdateCardData: PropTypes.func.isRequired
+};
+
+export default withLoading(Card, '510px', '260px');

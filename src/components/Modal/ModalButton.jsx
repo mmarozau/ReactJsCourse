@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
+
 import styles from './ModalButton.module.css';
 
 
-const ModalButton = ({ onButton, children }) => {
+const ModalButton = ({ children, onButton }) => {
 
     const onButtonHandler = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
@@ -17,6 +19,11 @@ const ModalButton = ({ onButton, children }) => {
             </div>
         </div>
     );
+};
+
+ModalButton.propTypes = {
+    children: PropTypes.any.isRequired,
+    onButton: PropTypes.func.isRequired
 };
 
 export default ModalButton;

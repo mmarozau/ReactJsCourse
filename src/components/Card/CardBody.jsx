@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styles from './CardBody.module.css';
 
 
@@ -13,6 +15,13 @@ const CardBody = ({ text, inputText, isEditMode, onTextInput }) => {
             )}
         </div>
     );
+};
+
+CardBody.propTypes = {
+    text: PropTypes.string.isRequired,
+    inputText: PropTypes.string.isRequired,
+    isEditMode: PropTypes.bool.isRequired,
+    onTextInput: PropTypes.func.isRequired
 };
 
 export default CardBody;
