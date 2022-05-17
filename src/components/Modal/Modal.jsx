@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import FocusTrap from 'focus-trap-react';
 
@@ -51,6 +52,14 @@ const Modal = ({ isModalActive, type, title, content, onModalClose }) => {
         </>
 
     );
+};
+
+Modal.propTypes = {
+    isModalActive: PropTypes.bool.isRequired,
+    type: PropTypes.oneOf(['information', 'confirmation']),
+    title: PropTypes.string,
+    content: PropTypes.any,
+    onModalClose: PropTypes.func.isRequired
 };
 
 export default Modal;

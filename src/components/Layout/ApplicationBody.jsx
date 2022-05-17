@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import './ApplicationBody.css'
@@ -39,13 +39,11 @@ const ApplicationBody = () => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
-        setIsViewMode((prevState) => {
-            if (!prevState === true) {
-                cardsDataCtx.disableEditModeAll();
-            }
-            return !prevState;
-        });
+        setIsViewMode((prevState) => !prevState);
     };
+    useEffect(() => {
+        if (isViewMode === true) cardsDataCtx.disableEditModeAll();
+    }, [isViewMode]);
 
     const deleteSelected = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();

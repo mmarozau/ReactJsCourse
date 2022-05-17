@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import logo from '../../logo.svg'
 import './ApplicationHeader.css';
@@ -14,5 +15,9 @@ const ApplicationHeader = (props) => (
         </div>
     </div>
 );
+
+ApplicationHeader.propTypes = {
+    titleLabel: PropTypes.string
+};
 
 export default React.memo(ApplicationHeader);
