@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styles from './Tag.module.css';
 
 const Tag = (props) => (
@@ -5,5 +7,9 @@ const Tag = (props) => (
         {props.label}
     </div>
 );
+
+Tag.propTypes = {
+    label: PropTypes.string.isRequired
+};
 
 export default Tag;

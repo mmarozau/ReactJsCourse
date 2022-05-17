@@ -55,7 +55,7 @@ const ApplicationBody = () => {
 
         const selectedIds = cardsDataCtx.cardsList.filter(el => el.isSelected).map(el => el.id);
 
-        modalCtx.createModal('confirmation', null, `Would you like to delete selected (${selectedIds.length}) cards?`,
+        modalCtx.createModal(modalCtx.modalTypes.TYPE_CONF, null, `Would you like to delete selected (${selectedIds.length}) cards?`,
             null, () => {
                 cardsDataCtx.deleteCard(selectedIds);
             }

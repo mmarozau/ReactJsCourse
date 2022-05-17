@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import ModalContext from "../../contexts/modal-context";
 import Modal from "./Modal";
+import { modalTypes } from "./modal-constants";
 
 const ModalManager = (props) => {
     const [modalData, setModalData] = useState({ isModalActive: false });
@@ -21,7 +22,7 @@ const ModalManager = (props) => {
     };
 
     return (
-        <ModalContext.Provider value={{ createModal }}>
+        <ModalContext.Provider value={{ createModal, modalTypes }}>
             <Modal isModalActive={modalData.isModalActive} type={modalData.type} title={modalData.title} content={modalData.content}
                 onModalClose={closeModalHandler} />
             {props.children}
