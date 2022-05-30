@@ -72,4 +72,4 @@ Card.propTypes = {
     onUpdateCardData: PropTypes.func.isRequired
 };
 
-export default withLoading(Card, '510px', '260px');
+export default React.memo(withLoading(Card, '510px', '260px'));
