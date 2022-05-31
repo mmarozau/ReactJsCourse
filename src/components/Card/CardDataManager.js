@@ -1,65 +1,30 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import axios from "axios";
 
 import CardsDataContext from "../../contexts/cards-data-context";
 
 
-const INITIAL_CARDS_LIST = [
-    {
-        id: 1,
-        title: 'Sample Card 1',
-        text: 'Sample text for sample card 1...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 2,
-        title: 'Sample Card 2',
-        text: 'Sample text for sample card 2...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 3,
-        title: 'Sample Card 3',
-        text: 'Sample text for sample card 3...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 4,
-        title: 'Sample Card 4',
-        text: 'Sample text for sample card 4...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 5,
-        title: 'Sample Card 5',
-        text: 'Sample text for sample card 5...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 6,
-        title: 'Sample Card 6',
-        text: 'Sample text for sample card 6...',
-        isSelected: false,
-        isEditMode: false
-    },
-    {
-        id: 7,
-        title: 'Sample Card 7',
-        text: 'Sample text for sample card 7...',
-        isSelected: false,
-        isEditMode: false
-    }
-];
-
-
 const CardsDataManager = (props) => {
 
-    const [cardsList, setCardsList] = useState(INITIAL_CARDS_LIST);
+    const [cardsList, setCardsList] = useState([]);
     const [isSomeSelected, setIsSomeSelected] = useState(false);
+
+    useEffect(() => {
+        axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json', { responseType: 'json' })
+            .then(resp => {
+                const loadedCardsData = Array.isArray(resp.data) ? resp.data.slice(0, 15) : [];
+                setCardsList(loadedCardsData.map((el, elIdx) => ({
+                    id: elIdx,
+                    title: el.Name,
+                    text: el.About,
+                    isSelected: false,
+                    isEditMode: false
+                })));
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, []);
 
     const updateCard = useCallback((newCard) => {
         setCardsList((prevState) => {
@@ -72,7 +37,7 @@ const CardsDataManager = (props) => {
         });
     }, [isSomeSelected]);
 
-    const deleteCard = (ids) => {
+    const deleteCard = useCallback((ids) => {
         if (!ids && ids !== 0) return;
 
         const idsToDel = Array.isArray(ids) ? ids : [ids];
@@ -81,26 +46,25 @@ const CardsDataManager = (props) => {
             if (isSomeSelected && !selectedAfterDeletion.length) setIsSomeSelected(false);
             return prevState.filter(el => !idsToDel.includes(el.id));
         });
-    };
+    }, [isSomeSelected]);
 
-    const addCard = () => {
-        const newCardId = cardsList.length ? Math.max(...cardsList.map(el => el.id)) + 1 : 1;
+    const addCard = useCallback(() => {
         setCardsList((prevState) => {
             return [...prevState, {
-                id: newCardId,
+                id: prevState.length ? Math.max(...prevState.map(el => el.id)) + 1 : 1,
                 title: '',
                 text: '',
                 isSelected: false,
                 isEditMode: true
             }];
         });
-    };
+    }, []);
 
-    const disableEditModeAll = () => {
+    const disableEditModeAll = useCallback(() => {
         setCardsList((prevState) => {
             return prevState.map(el => ({ ...el, isEditMode: false }));
         });
-    };
+    }, []);
 
 
     return (
