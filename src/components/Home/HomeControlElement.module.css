@@ -1,0 +1,16 @@
+.home-control-element {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+    padding: 2px 2px;
+    margin: 2px 0 2px 0;
+
+    cursor: pointer;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+
+.home-control-element:hover {
+    border-color: #333333;
+}

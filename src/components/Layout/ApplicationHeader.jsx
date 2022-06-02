@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import logo from '../../logo.svg'
-import './ApplicationHeader.css';
+import styles from './ApplicationHeader.module.css';
 
 const ApplicationHeader = (props) => (
-    <div className='header'>
-        <div className="header-title-label-wr">
-            <div className="header-title-label">{props.titleLabel || '<App Title>'}</div>
+    <div className={styles['header']}>
+        <div className={styles['header-title-label-wr']}>
+            <div className={styles['header-title-label']}>{props.titleLabel || '<App Title>'}</div>
         </div>
-        <div className="header-title-spacer"></div>
+        <div className={styles['header-title-spacer']}></div>
         <div>
-            <img src={logo} className="header-img-logo" alt="logo" />
+            <img src={logo} className={styles['header-img-logo']} alt="logo" />
         </div>
     </div>
 );

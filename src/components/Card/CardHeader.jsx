@@ -12,7 +12,7 @@ const CardHeader = ({ title, inputTitle, isEditMode, isSelected, isViewMode,
             {!isEditMode ? (
                 // Read Mode
                 <div className={styles['card-title']}>
-                    <div className={styles['card-title-label']}>{title || '<Card Title>'}</div>
+                    <div className={styles['card-title-label']}>{title || '<Title>'}</div>
                     <div className={styles['card-title-controls']}>
                         {!isViewMode && <AiFillEdit className={styles['card-title-control-item']} onClick={onEditModeEnable}
                             onKeyDown={onEditModeEnable} onKeyUp={onEditModeEnable} title="Edit" tabIndex="0" />}

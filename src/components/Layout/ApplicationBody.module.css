@@ -1,0 +1,9 @@
+.body {
+    background-color: inherit;
+    position: relative;
+
+    height: 100% - 50px;
+    min-height: 100%;
+
+    margin: 0;
+}
