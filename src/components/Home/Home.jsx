@@ -57,7 +57,7 @@ const Home = () => {
     useEffect(() => {
         setControlsList([
             { type: 'checkbox', label: VIEW_MODE_LABEL, disabled: false, checked: isViewMode, handler: isViewModeHandler },
-            { type: 'button', label: 'Add New Card', disabled: false, checked: undefined, handler: addNewCard },
+            { type: 'button', label: 'Add New Card', disabled: isViewMode, checked: undefined, handler: addNewCard },
             { type: 'button', label: 'Delete Selected', disabled: !cardsDataCtx.isSomeSelected, checked: undefined, handler: deleteSelected },
             { type: 'tag', label: `${cardsDataCtx.cardsList.length} Cards`, disabled: false, checked: undefined, handler: null }
         ]);

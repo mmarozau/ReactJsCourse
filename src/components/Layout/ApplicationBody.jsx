@@ -1,3 +1,5 @@
+import { Routes, Route } from 'react-router-dom';
+
 import styles from './ApplicationBody.module.css'
 
 import Home from '../Home/Home';
@@ -8,8 +10,11 @@ const ApplicationBody = () => {
 
     return (
         <div className={styles.body}>
-            <Home />
-            {/* <SignIn /> */}
+            <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/signin" element={<SignIn />}></Route>
+                <Route path="/*" element={null}></Route>
+            </Routes>
         </div>
     );
 };

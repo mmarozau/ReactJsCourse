@@ -23,6 +23,28 @@
     cursor: default;
 }
 
+.header-menu {
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+}
+
+.header-menu-item {
+    color: white;
+    font-size: 14px;
+
+    padding: 4px 8px;
+
+    cursor: pointer;
+    user-select: none;
+
+    text-decoration: none;
+}
+
+.header-menu-item:hover {
+    backdrop-filter: invert(25%);
+}
+
 .header-title-spacer {
     flex: 1 1 auto;
 }
@@ -45,9 +67,9 @@
 
 @keyframes header-img-logo-spin {
     from {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
+}

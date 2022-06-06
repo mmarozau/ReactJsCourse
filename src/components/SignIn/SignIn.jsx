@@ -1,9 +1,13 @@
-import { useState, useReducer } from 'react';
+import { useState, useReducer, useContext } from 'react';
 
 import styles from './SignIn.module.css';
 
+import AccessContext from '../../contexts/access-context';
+
 
 const SignIn = () => {
+
+    const accessCtx = useContext(AccessContext);
 
     const inputReducer = (prevState, action) => {
         return { value: action, isValid: (action !== '') }
@@ -21,13 +25,27 @@ const SignIn = () => {
         dispatchUserPassword(event.target.value);
     };
 
-    const signInButtonHandler = () => {
-        if (!isValidating) setIsValidating(true);
+    const signInButtonHandler = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
+        if (event.type === 'keyup' || (event.type === 'keydown' && (event.code !== 'Space' && event.code !== 'Enter'))) return;
+
+        if (userId.isValid && userPassword.isValid) {
+            accessCtx.signUserIn(userId, userPassword);
+        } else if (!isValidating) setIsValidating(true);
     };
+
+    const enterHandler = (event) => {
+        if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Enter') {
+            event.preventDefault();
+            event.stopPropagation();
+
+            signInButtonHandler(event);
+        };
+    }
 
     return (
         <div className={styles['signin-body']}>
-            <div className={styles['signin-box']}>
+            <div className={styles['signin-box']} onKeyDown={enterHandler}>
                 <span className={styles['signin-title']}>Sign-In</span>
                 <div>
                     <div>
