@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import AccessContext from "../../contexts/access-context";
 
 const AccessManager = (props) => {
@@ -6,7 +7,7 @@ const AccessManager = (props) => {
 
     const signUserIn = (id, password) => {
         if (id && password) {
-            setCurrentUser({ id, password })
+            setCurrentUser({ id, password });
         };
     };
 

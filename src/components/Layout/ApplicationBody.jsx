@@ -12,6 +12,7 @@ const ApplicationBody = () => {
         <div className={styles.body}>
             <Routes>
                 <Route path="/home" element={<Home />} />
+                <Route path="/cards/*" element={<Home />} />
                 <Route path="/signin" element={<SignIn />}></Route>
                 <Route path="/*" element={null}></Route>
             </Routes>

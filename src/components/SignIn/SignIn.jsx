@@ -1,4 +1,5 @@
 import { useState, useReducer, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import styles from './SignIn.module.css';
 
@@ -66,6 +67,7 @@ const SignIn = () => {
                 </div>
                 <button className={styles['signin-button']} type="button" onClick={signInButtonHandler}>Continue</button>
             </div>
+            {accessCtx?.currentUser?.id && <Navigate to="/home" />}
         </div >
     );
 };

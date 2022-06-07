@@ -4,7 +4,7 @@ import { AiFillEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import styles from './CardHeader.module.css'
 
 
-const CardHeader = ({ title, inputTitle, isEditMode, isSelected, isViewMode,
+const CardHeader = ({ title, inputTitle, isEditMode, isSelected, isViewMode, isNoControls,
     onTitleInput, onSelect, onEditModeEnable, onSave, onDiscard }) => {
 
     return (
@@ -13,11 +13,11 @@ const CardHeader = ({ title, inputTitle, isEditMode, isSelected, isViewMode,
                 // Read Mode
                 <div className={styles['card-title']}>
                     <div className={styles['card-title-label']}>{title || '<Title>'}</div>
-                    <div className={styles['card-title-controls']}>
+                    {!isNoControls && <div className={styles['card-title-controls']}>
                         {!isViewMode && <AiFillEdit className={styles['card-title-control-item']} onClick={onEditModeEnable}
                             onKeyDown={onEditModeEnable} onKeyUp={onEditModeEnable} title="Edit" tabIndex="0" />}
                         <input type="checkbox" checked={isSelected} onChange={onSelect} />
-                    </div>
+                    </div>}
                 </div>
             ) : (
                 // Edit Mode
@@ -41,6 +41,7 @@ CardHeader.propTypes = {
     isEditMode: PropTypes.bool.isRequired,
     isSelected: PropTypes.bool.isRequired,
     isViewMode: PropTypes.bool,
+    isNoControls: PropTypes.bool,
     onTitleInput: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
     onEditModeEnable: PropTypes.func.isRequired,
