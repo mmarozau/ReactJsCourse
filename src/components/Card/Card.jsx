@@ -7,10 +7,14 @@ import styles from './Card.module.css';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 
+import AccessContext from '../../contexts/access-context';
+
 import withLoading from '../withLoading/withLoading';
 
 
 const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
+
+    const accessCtx = React.useContext(AccessContext);
 
     const { id, title, text, isSelected, isEditMode } = cardInfo;
 
@@ -53,7 +57,7 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
     return (
         <div className={`${styles['card-body']} ${isSelected ? styles['selected'] : ''}`}>
             <CardHeader title={title} inputTitle={inputTitle} isEditMode={isEditMode} isSelected={isSelected}
-                isViewMode={isViewMode}
+                isViewMode={isViewMode} isNoControls={accessCtx.currentUser?.id ? false : true}
                 onTitleInput={inputTitleHandler} onSelect={selectCardHandler} onEditModeEnable={editModeEnable}
                 onSave={saveChanges} onDiscard={discardChanges} />
             <br />

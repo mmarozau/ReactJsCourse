@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import './App.css';
 
+import AccessManager from './components/SignIn/AccessManager';
 import ModalManager from './components/Modal/ModalManager';
 import CardsDataManager from './components/Card/CardDataManager';
 
@@ -14,19 +15,21 @@ const App = () => {
   useEffect(() => { document.title = 'Mikalai Marozau | ReactJS Course' }, []);
 
   return (
-    <div className="app-layout">
-      <ModalManager>
-        <div className="app-layout-header">
-          <ApplicationHeader titleLabel={'ReactJS Course'}></ApplicationHeader>
-        </div>
-        <div className="app-layout-body">
-          <CardsDataManager><ApplicationBody /></CardsDataManager>
-        </div>
-        <div className="app-layout-footer">
-          <ApplicationFooter />
-        </div>
-      </ModalManager>
-    </div>
+    <AccessManager>
+      <div className="app-layout">
+        <ModalManager>
+          <div className="app-layout-header">
+            <ApplicationHeader titleLabel={'ReactJS Course'}></ApplicationHeader>
+          </div>
+          <div className="app-layout-body">
+            <CardsDataManager><ApplicationBody /></CardsDataManager>
+          </div>
+          <div className="app-layout-footer">
+            <ApplicationFooter />
+          </div>
+        </ModalManager>
+      </div>
+    </AccessManager>
   );
 };
 

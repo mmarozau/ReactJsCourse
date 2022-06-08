@@ -1,11 +1,11 @@
 import React from 'react';
 
-import './ApplicationFooter.css';
+import styles from './ApplicationFooter.module.css';
 
 const ApplicationFooter = () => (
-    <div className="footer">
-        <div className="footer-title-label-wr">
-            <div className="footer-title-label">{'IBA-Gomel Employee Education'}</div>
+    <div className={styles.footer}>
+        <div className={styles['footer-title-label-wr']}>
+            <div className={styles['footer-title-label']}>{'IBA-Gomel Employee Education'}</div>
         </div>
     </div>
 );

@@ -8,7 +8,7 @@ const CardBody = ({ text, inputText, isEditMode, onTextInput }) => {
         <div>
             {!isEditMode ? (
                 // Read Mode
-                <div className={styles['card-content']}>{text || '<Card Content>'}</div>
+                <div className={styles['card-content']}>{text || '<Content>'}</div>
             ) : (
                 // Edit Mode
                 <textarea className={styles['input-text']} value={inputText} onChange={onTextInput}></textarea>

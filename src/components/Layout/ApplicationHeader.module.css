@@ -20,7 +20,30 @@
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 22px;
-    cursor: default;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header-menu {
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+}
+
+.header-menu-item {
+    color: white;
+    font-size: 14px;
+
+    padding: 4px 8px;
+
+    cursor: pointer;
+    user-select: none;
+
+    text-decoration: none;
+}
+
+.header-menu-item:hover {
+    backdrop-filter: invert(25%);
 }
 
 .header-title-spacer {
@@ -45,9 +68,9 @@
 
 @keyframes header-img-logo-spin {
     from {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
+}

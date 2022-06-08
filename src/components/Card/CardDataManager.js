@@ -66,11 +66,18 @@ const CardsDataManager = (props) => {
         });
     }, []);
 
+    const deselectAll = useCallback(() => {
+        setCardsList((prevState) => {
+            return prevState.map(el => ({ ...el, isSelected: false }));
+        });
+        setIsSomeSelected(false);
+    }, []);
+
 
     return (
         <CardsDataContext.Provider value={{
             cardsList, isSomeSelected,
-            updateCardData: updateCard, addCard, deleteCard, disableEditModeAll
+            updateCardData: updateCard, addCard, deleteCard, disableEditModeAll, deselectAll
         }}>
             {props.children}
         </CardsDataContext.Provider>
