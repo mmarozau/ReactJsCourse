@@ -3,6 +3,8 @@ import { Navigate } from 'react-router-dom';
 
 import styles from './SignIn.module.css';
 
+import InputBox from '../InputBox/InputBox';
+
 import AccessContext from '../../contexts/access-context';
 
 
@@ -10,28 +12,34 @@ const SignIn = () => {
 
     const accessCtx = useContext(AccessContext);
 
-    const inputReducer = (prevState, action) => {
-        return { value: action, isValid: (action !== '') }
-    }
+    const inputIdReducer = (prevState, action) => {
+        return { value: action, isValid: (action !== '' && action.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) }
+    };
+
+    const inputPWReducer = (prevState, action) => {
+        return { value: action, isValid: (action.length >= 8 && action.match(/(?=.*\d)(?=.*[a-z])/ig)) }
+    };
 
     const [isValidating, setIsValidating] = useState(false);
-    const [userId, dispatchUserId] = useReducer(inputReducer, { value: '', isValid: false });
-    const [userPassword, dispatchUserPassword] = useReducer(inputReducer, { value: '', isValid: false });
+    const [userId, dispatchUserId] = useReducer(inputIdReducer, { value: '', isValid: false });
+    const [userPW, dispatchUserPW] = useReducer(inputPWReducer, { value: '', isValid: false });
 
     const inputIdHandler = (event) => {
         dispatchUserId(event.target.value);
     };
 
-    const inputPasswordHandler = (event) => {
-        dispatchUserPassword(event.target.value);
+    const inputPWHandler = (event) => {
+        dispatchUserPW(event.target.value);
     };
 
     const signInButtonHandler = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && (event.code !== 'Space' && event.code !== 'Enter'))) return;
 
-        if (userId.isValid && userPassword.isValid) {
-            accessCtx.signUserIn(userId, userPassword);
+
+
+        if (userId.isValid && userPW.isValid) {
+            accessCtx.signUserIn(userId, userPW);
         } else if (!isValidating) setIsValidating(true);
     };
 
@@ -44,28 +52,27 @@ const SignIn = () => {
         };
     }
 
+    const labelStyle = {
+        fontFamily: 'Arial, Helvetica, sans-serif',
+        fontWeight: 500
+    };
+
     return (
         <div className={styles['signin-body']}>
             <div className={styles['signin-box']} onKeyDown={enterHandler}>
                 <span className={styles['signin-title']}>Sign-In</span>
                 <div>
-                    <div>
-                        <div className={styles['signin-input-label']}>User name</div>
-                        <input className={`${styles['signin-input-field']}${(isValidating && !userId.isValid) ? (' ' + styles['not-valid']) : ''}`}
-                            type="text" value={userId.value} onChange={inputIdHandler}></input>
-                    </div>
+                    <InputBox label="User id / Email" labelStyle={labelStyle} isInvalid={isValidating && !userId.isValid}
+                        value={userId.value} changeHandler={inputIdHandler} />
                     <div style={{ margin: '8px 0' }}></div>
-                    <div>
-                        <div className={styles['signin-input-label']}>Password</div>
-                        <input className={`${styles['signin-input-field']}${(isValidating && !userPassword.isValid) ? (' ' + styles['not-valid']) : ''}`}
-                            type="password" value={userPassword.value} onChange={inputPasswordHandler}></input>
-                    </div>
+                    <InputBox label="Password" labelStyle={labelStyle} isInvalid={isValidating && !userPW.isValid} type="password"
+                        value={userPW.value} changeHandler={inputPWHandler} />
                 </div>
                 <div className={styles['signin-warning-msg']}
-                    style={(!isValidating || (userId.isValid && userPassword.isValid)) ? { color: 'transparent', cursor: 'default', userSelect: 'none' } : {}}>
+                    style={(!isValidating || (userId.isValid && userPW.isValid)) ? { color: 'transparent', cursor: 'default', userSelect: 'none' } : {}}>
                     Please enter valid user name and password.
                 </div>
-                <button className={styles['signin-button']} type="button" onClick={signInButtonHandler}>Continue</button>
+                <button className={styles['signin-button'] + (!(userId.isValid && userPW.isValid) ? ` ${styles['disabled']}` : '')} type="button" onClick={signInButtonHandler}>Continue</button>
             </div>
             {accessCtx?.currentUser?.id && <Navigate to="/home" />}
         </div >

@@ -35,24 +35,6 @@
     font-weight: bold;
 }
 
-.signin-input-label {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 2px;
-}
-
-.signin-input-field {
-    font-size: 12px;
-    padding: 4px;
-    width: calc(100% - 12px);
-}
-
-.signin-input-field.not-valid {
-    border-color: #fa4d56;
-    outline-color: #fa4d56;
-}
-
 .signin-warning-msg {
     color: #ff8389;
     /* text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; */
@@ -71,4 +53,10 @@
 
     border-color: rgb(101, 224, 255);
     border-radius: 4px;
+}
+
+.signin-button.disabled {
+    color: grey;
+    background-color: lightgrey;
+    border-color: lightgrey
 }

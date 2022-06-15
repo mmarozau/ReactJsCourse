@@ -1,0 +1,15 @@
+.input-label {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.input-field {
+    font-size: 12px;
+    padding: 4px;
+    width: calc(95%);
+}
+
+.input-field.not-valid {
+    border-color: #fa4d56;
+    outline-color: #fa4d56;
+}
