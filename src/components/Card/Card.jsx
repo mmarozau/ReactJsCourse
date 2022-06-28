@@ -1,25 +1,27 @@
 import React from 'react'; // trying useState without destructuring from React
 // import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import styles from './Card.module.css';
 
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 
-import AccessContext from '../../contexts/access-context';
-
 import withLoading from '../withLoading/withLoading';
 
 
 const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const accessCtx = React.useContext(AccessContext);
+    const currentUserId = useSelector((state) => state?.auth?.userId)
 
     const { id, title, text, isSelected, isEditMode } = cardInfo;
 
-    const [inputTitle, setInputTitle] = React.useState('');
-    const [inputText, setInputText] = React.useState('');
+    const [inputTitle, setInputTitle] = React.useState(title);
+    const [inputText, setInputText] = React.useState(text);
 
 
     const selectCardHandler = () => {
@@ -39,25 +41,27 @@ const Card = ({ isViewMode, onUpdateCardData, ...cardInfo }) => {
         setInputTitle(title);
         setInputText(text);
         onUpdateCardData({ ...cardInfo, isEditMode: true, isSelected: false });
-    }
+    };
 
     const saveChanges = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
         onUpdateCardData({ ...cardInfo, title: inputTitle, text: inputText, isEditMode: false });
-    }
+    };
+
     const discardChanges = (event) => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && event.code !== 'Space')) return;
 
         onUpdateCardData({ ...cardInfo, isEditMode: false });
-    }
+    };
 
     return (
-        <div className={`${styles['card-body']} ${isSelected ? styles['selected'] : ''}`}>
+        <div className={`${styles['card-body']} ${isSelected ? styles['selected'] : ''}`}
+            onDoubleClick={() => !isEditMode && location?.pathname !== `/cards/${id}` && navigate(`/cards/${id}`)}>
             <CardHeader title={title} inputTitle={inputTitle} isEditMode={isEditMode} isSelected={isSelected}
-                isViewMode={isViewMode} isNoControls={accessCtx.currentUser?.id ? false : true}
+                isViewMode={isViewMode} isNoControls={currentUserId ? false : true}
                 onTitleInput={inputTitleHandler} onSelect={selectCardHandler} onEditModeEnable={editModeEnable}
                 onSave={saveChanges} onDiscard={discardChanges} />
             <br />

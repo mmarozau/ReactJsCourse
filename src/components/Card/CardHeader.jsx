@@ -13,7 +13,7 @@ const CardHeader = ({ title, inputTitle, isEditMode, isSelected, isViewMode, isN
                 // Read Mode
                 <div className={styles['card-title']}>
                     <div className={styles['card-title-label']}>{title || '<Title>'}</div>
-                    {!isNoControls && <div className={styles['card-title-controls']}>
+                    {!isNoControls && <div className={styles['card-title-controls']} onDoubleClick={(event) => event.stopPropagation()}>
                         {!isViewMode && <AiFillEdit className={styles['card-title-control-item']} onClick={onEditModeEnable}
                             onKeyDown={onEditModeEnable} onKeyUp={onEditModeEnable} title="Edit" tabIndex="0" />}
                         <input type="checkbox" checked={isSelected} onChange={onSelect} />
