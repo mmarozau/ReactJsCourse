@@ -4,6 +4,7 @@ import styles from './CardBody.module.css';
 
 
 const CardBody = ({ text, inputText, isEditMode, onTextInput }) => {
+
     return (
         <div>
             {!isEditMode ? (

@@ -1,16 +1,15 @@
-import { useState, useReducer, useContext } from 'react';
+import { useState, useReducer } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
 
 import styles from './SignIn.module.css';
 
 import InputBox from '../InputBox/InputBox';
 
-import AccessContext from '../../contexts/access-context';
-
 
 const SignIn = () => {
-
-    const accessCtx = useContext(AccessContext);
+    const currentUserId = useSelector((state) => state?.auth?.userId);
+    const dispatchGlbStore = useDispatch();
 
     const inputIdReducer = (prevState, action) => {
         return { value: action, isValid: (action !== '' && action.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) }
@@ -36,10 +35,8 @@ const SignIn = () => {
         if ((event.type === 'keydown' || event.type === 'keyup') && event.code === 'Space') event.preventDefault();
         if (event.type === 'keyup' || (event.type === 'keydown' && (event.code !== 'Space' && event.code !== 'Enter'))) return;
 
-
-
         if (userId.isValid && userPW.isValid) {
-            accessCtx.signUserIn(userId, userPW);
+            dispatchGlbStore({ type: 'auth-signin-user', userId: userId });
         } else if (!isValidating) setIsValidating(true);
     };
 
@@ -74,7 +71,7 @@ const SignIn = () => {
                 </div>
                 <button className={styles['signin-button'] + (!(userId.isValid && userPW.isValid) ? ` ${styles['disabled']}` : '')} type="button" onClick={signInButtonHandler}>Continue</button>
             </div>
-            {accessCtx?.currentUser?.id && <Navigate to="/home" />}
+            {currentUserId && <Navigate to="/home" />}
         </div >
     );
 };
